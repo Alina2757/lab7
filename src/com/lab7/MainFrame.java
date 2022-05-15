@@ -140,6 +140,22 @@ public class MainFrame extends JFrame {
             final String senderName = textFieldFrom.getText();
             final String destinationAddress = textFieldTo.getText();
             final String message = textAreaOutgoing.getText();
+            String[] ip = destinationAddress.split("\\.");
+            if (ip.length != 4) {
+                JOptionPane.showMessageDialog(this, "IP-адрес введен неверно!",
+                        "Ошибка", JOptionPane.ERROR_MESSAGE);
+                textFieldTo.requestFocusInWindow();
+                return;
+            }
+            for (String ipValue : ip) {
+                int i = Integer.parseInt(ipValue);
+                if (i < 0 || i > 255) {
+                    JOptionPane.showMessageDialog(this, "IP-адрес введен неверно!",
+                            "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    textFieldTo.requestFocusInWindow();
+                    return;
+                }
+            }
             if (senderName.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         "Введите имя отправителя", "Ошибка",
